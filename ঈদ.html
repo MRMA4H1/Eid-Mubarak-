@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eid Premium Surprise</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Hind Siliguri', sans-serif;
+}
+
+body{
+    background: radial-gradient(circle at top, #0a0a0a, #000);
+    color:#fff;
+    height:100vh;
+    overflow:hidden;
+}
+
+/* Glass Card */
+.container{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:90%;
+    max-width:400px;
+    padding:30px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(20px);
+    text-align:center;
+    box-shadow:0 0 40px rgba(255,215,0,0.3);
+}
+
+/* Inputs */
+input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    margin-top:15px;
+    background:rgba(255,255,255,0.1);
+    color:#fff;
+    text-align:center;
+}
+
+/* Button */
+.btn{
+    margin-top:20px;
+    padding:12px 20px;
+    border:none;
+    border-radius:30px;
+    background:gold;
+    color:#000;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+.btn:hover{
+    box-shadow:0 0 20px gold;
+}
+
+/* Gift Box */
+.gift{
+    font-size:60px;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.1);}
+    100%{transform:scale(1);}
+}
+
+/* Hidden Sections */
+.section{
+    display:none;
+}
+
+/* Moon */
+.moon{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:gold;
+    box-shadow:0 0 20px gold;
+    margin:20px auto;
+}
+
+/* Stars */
+.star{
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:white;
+    border-radius:50%;
+    animation:twinkle 2s infinite;
+}
+@keyframes twinkle{
+    0%,100%{opacity:0;}
+    50%{opacity:1;}
+}
+
+/* Lantern */
+.lantern{
+    font-size:50px;
+    animation:glow 1.5s infinite alternate;
+}
+@keyframes glow{
+    from{filter:drop-shadow(0 0 5px gold);}
+    to{filter:drop-shadow(0 0 20px gold);}
+}
+
+/* Fireworks */
+.firework{
+    position:absolute;
+    width:5px;
+    height:5px;
+    background:gold;
+    border-radius:50%;
+    animation:explode 1s linear infinite;
+}
+@keyframes explode{
+    from{transform:scale(1);opacity:1;}
+    to{transform:scale(10);opacity:0;}
+}
+
+/* Watermark */
+.watermark{
+    position:fixed;
+    bottom:10px;
+    right:10px;
+    font-size:12px;
+    opacity:0.6;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAME INPUT -->
+<div class="container" id="login">
+    <h2>তোমার নাম লিখো</h2>
+    <input type="text" id="username" placeholder="তোমার নাম...">
+    <button class="btn" onclick="start()">এন্টার করো</button>
+</div>
+
+<!-- GIFT -->
+<div class="container section" id="gift">
+    <div class="gift">🎁</div>
+    <h2 id="welcomeText"></h2>
+    <button class="btn" onclick="step1()">সারপ্রাইজটি খুলুন</button>
+</div>
+
+<!-- STEP 1 -->
+<div class="container section" id="step1">
+    <div class="moon"></div>
+    <h2>ঈদের চাঁদ উঠেছে আকাশে!</h2>
+    <button class="btn" onclick="step2()">পরবর্তী</button>
+</div>
+
+<!-- STEP 2 -->
+<div class="container section" id="step2">
+    <div class="lantern">🏮</div>
+    <h2 id="wishText"></h2>
+    <button class="btn" onclick="step3()">শেষ ধাপ</button>
+</div>
+
+<!-- FINAL -->
+<div class="container section" id="final">
+    <h1>✨ শুভ ঈদ-উল-ফিতর ✨</h1>
+</div>
+
+<div class="watermark">Crafted with ❤️ by MR MA4HI</div>
+
+<script>
+
+let name="";
+
+/* Start */
+function start(){
+    name=document.getElementById("username").value;
+    if(name===""){
+        alert("নাম লিখো!");
+        return;
+    }
+    document.getElementById("login").style.display="none";
+    document.getElementById("gift").style.display="block";
+
+    document.getElementById("welcomeText").innerText=
+    name + " — তোমার জন্য একটি সারপ্রাইজ!";
+}
+
+/* Step 1 */
+function step1(){
+    document.getElementById("gift").style.display="none";
+    document.getElementById("step1").style.display="block";
+
+    createStars();
+}
+
+/* Step 2 */
+function step2(){
+    document.getElementById("step1").style.display="none";
+    document.getElementById("step2").style.display="block";
+
+    document.getElementById("wishText").innerText=
+    name + " — তোমার এবং তোমার পরিবারের সবার জীবন আনন্দে ভরে উঠুক। ঈদ মোবারক!";
+}
+
+/* Step 3 */
+function step3(){
+    document.getElementById("step2").style.display="none";
+    document.getElementById("final").style.display="block";
+
+    createFireworks();
+}
+
+/* Stars */
+function createStars(){
+    for(let i=0;i<50;i++){
+        let star=document.createElement("div");
+        star.className="star";
+        star.style.top=Math.random()*100+"vh";
+        star.style.left=Math.random()*100+"vw";
+        document.body.appendChild(star);
+    }
+}
+
+/* Fireworks */
+function createFireworks(){
+    setInterval(()=>{
+        let f=document.createElement("div");
+        f.className="firework";
+        f.style.top=Math.random()*100+"vh";
+        f.style.left=Math.random()*100+"vw";
+        document.body.appendChild(f);
+
+        setTimeout(()=>f.remove(),1000);
+    },300);
+}
+
+</script>
+
+</body>
+</html>
